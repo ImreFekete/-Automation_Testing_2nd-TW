@@ -16,7 +16,8 @@ public class LogOut extends JiraSoftware {
 
     @Override
     public void run() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        int timeout = 10;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         WebElement profileMenu = driver.findElement(By.id("user-options"));
         profileMenu.click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("system")));
