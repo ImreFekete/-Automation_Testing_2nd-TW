@@ -11,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class JiraSoftwareTest {
+public class jiraSoftwareTest {
 
     public static WebDriver driver = null;
 
@@ -21,7 +21,7 @@ public class JiraSoftwareTest {
         Dotenv dotenv = Dotenv.load();
         String username = dotenv.get("USERNAME");
         String password = dotenv.get("PASSWORD");
-        JiraSoftware login = new LogIn(driver, username, password);
+        jiraSoftware login = new logIn(driver, username, password);
         login.run();
     }
     @Test
