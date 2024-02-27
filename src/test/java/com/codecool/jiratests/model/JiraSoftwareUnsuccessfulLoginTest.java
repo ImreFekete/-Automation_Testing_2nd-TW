@@ -46,10 +46,12 @@ public class JiraSoftwareUnsuccessfulLoginTest {
         String username = dotenv.get("JIRA_USERNAME");
         String wrongPassword = "wrongpasswordfortest";
         String captchaId = "captcha";
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        int tries = 3;
+        int timeout = 10;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         JiraSoftware login = new LogIn(driver, username, wrongPassword);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < tries; i++) {
             login.run();
         }
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(captchaId)));
