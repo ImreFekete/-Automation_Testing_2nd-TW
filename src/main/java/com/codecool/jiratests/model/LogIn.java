@@ -3,11 +3,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class logIn extends jiraSoftware {
+public class LogIn extends JiraSoftware {
     private static final String url = "https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa";
     private final String username;
     private final String password;
-    public logIn(WebDriver driver, String username, String password) {
+    public LogIn(WebDriver driver, String username, String password) {
         super(driver);
         this.username = username;
         this.password = password;

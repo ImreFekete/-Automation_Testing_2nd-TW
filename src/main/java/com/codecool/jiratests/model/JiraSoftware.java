@@ -2,10 +2,10 @@ package com.codecool.jiratests.model;
 
 import org.openqa.selenium.WebDriver;
 
-public abstract class jiraSoftware {
+public abstract class JiraSoftware {
     protected final WebDriver driver;
 
-    public jiraSoftware(WebDriver driver) {
+    public JiraSoftware(WebDriver driver) {
         this.driver = driver;
     }
 
