@@ -1,6 +1,4 @@
 package com.codecool.jiratests.model;
-
-import io.github.cdimascio.dotenv.Dotenv;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,11 +7,10 @@ public class LogIn extends JiraSoftware {
     private static final String url = "https://jira-auto.codecool.metastage.net/secure/Dashboard.jspa";
     private final String username;
     private final String password;
-    public LogIn(WebDriver driver) {
+    public LogIn(WebDriver driver, String username, String password) {
         super(driver);
-        Dotenv dotenv = Dotenv.load();
-        username = dotenv.get("USERNAME");
-        password = dotenv.get("PASSWORD");
+        this.username = username;
+        this.password = password;
     }
 
     @Override

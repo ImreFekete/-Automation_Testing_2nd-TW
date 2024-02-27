@@ -1,5 +1,6 @@
 package com.codecool.jiratests.model;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,11 +18,14 @@ public class JiraSoftwareTest {
     @BeforeEach
     public void setUpDriver(){
         driver = new ChromeDriver();
+        Dotenv dotenv = Dotenv.load();
+        String username = dotenv.get("USERNAME");
+        String password = dotenv.get("PASSWORD");
+        JiraSoftware login = new LogIn(driver, username, password);
+        login.run();
     }
     @Test
     public void SuccessfulLogIn(){
-        JiraSoftware login = new LogIn(driver);
-        login.run();
         WebElement profileMenu = driver.findElement(By.id("user-options"));
         assertTrue(profileMenu.isDisplayed());
     }
