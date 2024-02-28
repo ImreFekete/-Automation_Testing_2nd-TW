@@ -22,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JiraSoftwareTest {
 
     private static WebDriver driver = null;
+    private static Dotenv dotenv = Dotenv.load();
+    private static WebDriverWait wait = null;
 
     private static Stream<String> provideProjectNamesForBrowseProject() {
         return Stream.of(
@@ -34,19 +36,17 @@ public class JiraSoftwareTest {
     @BeforeEach
     public void setup() {
         driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         driver.manage().window().maximize();
-        Dotenv dotenv = Dotenv.load();
         String username = dotenv.get("JIRA_USERNAME");
         String password = dotenv.get("JIRA_PASSWORD");
         JiraSoftware login = new LogIn(driver, username, password);
         login.run();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("header-details-user-fullname")));
     }
 
     @Test
     public void successfulLogIn() {
-        Dotenv dotenv = Dotenv.load();
         String username = dotenv.get("JIRA_USERNAME");
         WebElement profileMenu = driver.findElement(By.id("header-details-user-fullname"));
         assertEquals(username, profileMenu.getAttribute("data-username"));
@@ -64,13 +64,25 @@ public class JiraSoftwareTest {
     @MethodSource("provideProjectNamesForBrowseProject")
     public void browseProject(String projectToSearch) {
         JiraSoftware browseProject = new BrowseProject(driver, projectToSearch);
-
         browseProject.run();
         WebElement projectField = driver.findElement(By.xpath("//a[@title='" + projectToSearch + "']"));
 
         Assertions.assertTrue(projectField.isDisplayed());
     }
 
+    @Test
+    public void browseByAssigneeName() {
+        String fullName = dotenv.get("JIRA_FULL_NAME");
+        String username = dotenv.get("JIRA_USERNAME");
+        String assigneeFieldXpath = "//span[@rel='" + username + "']";
+        JiraSoftware search = new SearchIssueByUser(driver, fullName);
+
+        search.run();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(assigneeFieldXpath)));
+        WebElement firstIssueAssigneeField = driver.findElement(By.xpath(assigneeFieldXpath));
+
+        Assertions.assertEquals(firstIssueAssigneeField.getAttribute("rel"), username);
+    }
     @AfterEach
     public void tearDown() {
         driver.quit();
