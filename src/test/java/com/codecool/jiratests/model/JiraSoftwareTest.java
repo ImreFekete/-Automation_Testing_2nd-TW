@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,6 +23,13 @@ public class JiraSoftwareTest {
 
     private static WebDriver driver = null;
 
+    private static Stream<String> provideProjectNamesForBrowseProject() {
+        return Stream.of(
+                "Main Testing Project",
+                "TOUCAN project",
+                "COALA project"
+        );
+    }
 
     @BeforeEach
     public void setup() {
@@ -50,6 +60,7 @@ public class JiraSoftwareTest {
         Assertions.assertTrue(logOutPanel.isDisplayed());
     }
 
+
     @Test
     public void createMTPIssue() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -72,6 +83,17 @@ public class JiraSoftwareTest {
 
         JiraSoftware deleteIssue = new DeleteIssue(driver);
         deleteIssue.run();
+    }
+  
+    @ParameterizedTest
+    @MethodSource("provideProjectNamesForBrowseProject")
+    public void browseProject(String projectToSearch) {
+        JiraSoftware browseProject = new BrowseProject(driver, projectToSearch);
+
+        browseProject.run();
+        WebElement projectField = driver.findElement(By.xpath("//a[@title='" + projectToSearch + "']"));
+
+        Assertions.assertTrue(projectField.isDisplayed());
     }
 
     @AfterEach
