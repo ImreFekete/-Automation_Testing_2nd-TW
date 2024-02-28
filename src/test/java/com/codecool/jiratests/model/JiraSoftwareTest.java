@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JiraSoftwareTest {
 
@@ -48,6 +48,30 @@ public class JiraSoftwareTest {
         logOut.run();
         WebElement logOutPanel = driver.findElement(By.id("main"));
         Assertions.assertTrue(logOutPanel.isDisplayed());
+    }
+
+    @Test
+    public void createMTPIssue() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        String summary = "Hello World!";
+        String issueIDXpath = "//*[@id=\"aui-flag-container\"]/div/div/a";
+
+        JiraSoftware MTPIssue = new CreateMTPIssue(driver, summary);
+        MTPIssue.run();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(issueIDXpath)));
+        WebElement issueName = driver.findElement(By.xpath(issueIDXpath));
+        String expected = issueName.getAccessibleName();
+        issueName.click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("key-val")));
+        WebElement testID = driver.findElement(By.id("key-val"));
+        String actual = testID.getAccessibleName() + " - " + summary;
+
+        Assertions.assertEquals(actual, expected);
+
+        JiraSoftware deleteIssue = new DeleteIssue(driver);
+        deleteIssue.run();
     }
 
     @AfterEach
