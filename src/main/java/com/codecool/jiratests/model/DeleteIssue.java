@@ -17,16 +17,19 @@ public class DeleteIssue extends JiraSoftware {
     @Override
     public void run() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        String dropDownXpath = "//*[@id=\"opsbar-operations_more\"]/span";
 
-        WebElement moreDropdown = driver.findElement(By.xpath("//*[@id=\"opsbar-operations_more\"]/span"));
+        WebElement moreDropdown = driver.findElement(By.xpath(dropDownXpath));
         moreDropdown.click();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"delete-issue\"]/a/span")));
-        WebElement deleteButton = driver.findElement(By.xpath("//*[@id=\"delete-issue\"]/a/span"));
+        String deleteIssueButtonXpath = "//*[@id=\"delete-issue\"]/a/span";
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(deleteIssueButtonXpath)));
+        WebElement deleteButton = driver.findElement(By.xpath(deleteIssueButtonXpath));
         deleteButton.click();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("delete-issue-submit")));
-        WebElement finalDeleteButton = driver.findElement(By.id("delete-issue-submit"));
+        String deleteSubmitButtonID = "delete-issue-submit";
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(deleteSubmitButtonID)));
+        WebElement finalDeleteButton = driver.findElement(By.id(deleteSubmitButtonID));
         finalDeleteButton.click();
     }
 }
