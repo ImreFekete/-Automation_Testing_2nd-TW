@@ -15,7 +15,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class JiraSoftwareCreateIssueTest {
-
     private static WebDriver driver = null;
     private static WebDriverWait wait = null;
     private static Dotenv dotenv = Dotenv.load();
@@ -60,7 +59,7 @@ public class JiraSoftwareCreateIssueTest {
     }
 
     @Test
-    public void cancelIssueEditing() {
+    public void createIssueWithoutMandatoryField() {
         CreateIssue createIssue = new CreateIssue(driver, wait);
         createIssue.run();
 
