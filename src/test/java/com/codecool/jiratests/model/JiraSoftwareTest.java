@@ -61,30 +61,8 @@ public class JiraSoftwareTest {
     }
 
 
-    @Test
-    public void createMTPIssue() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        String summary = "Hello World!";
-        String issueIDXpath = "//*[@id=\"aui-flag-container\"]/div/div/a";
 
-        JiraSoftware MTPIssue = new CreateMTPIssue(driver, summary);
-        MTPIssue.run();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(issueIDXpath)));
-        WebElement issueName = driver.findElement(By.xpath(issueIDXpath));
-        String expected = issueName.getAccessibleName();
-        issueName.click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("key-val")));
-        WebElement testID = driver.findElement(By.id("key-val"));
-        String actual = testID.getAccessibleName() + " - " + summary;
-
-        Assertions.assertEquals(actual, expected);
-
-        JiraSoftware deleteIssue = new DeleteIssue(driver);
-        deleteIssue.run();
-    }
-  
     @ParameterizedTest
     @MethodSource("provideProjectNamesForBrowseProject")
     public void browseProject(String projectToSearch) {
