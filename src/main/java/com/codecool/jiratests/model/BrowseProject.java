@@ -10,15 +10,16 @@ import java.time.Duration;
 
 public class BrowseProject extends JiraSoftware {
     private final String projectToSearch;
+    private final WebDriverWait wait;
 
-    public BrowseProject(WebDriver driver, String projectToSearch) {
+    public BrowseProject(WebDriver driver, WebDriverWait wait, String projectToSearch) {
         super(driver);
+        this.wait = wait;
         this.projectToSearch = projectToSearch;
     }
 
     @Override
     public void run() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement projectsMenuPoint = driver.findElement(By.id("browse_link"));
         projectsMenuPoint.click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("browse_link-content")));
