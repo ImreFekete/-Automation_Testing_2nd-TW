@@ -19,6 +19,7 @@ public class JiraSoftwareCreateIssueTest {
     private static WebDriverWait wait = null;
     private static Dotenv dotenv = Dotenv.load();
     private static final String PROFILE_MENU_ID = "header-details-user-fullname";
+    private static final String summary = "Hello World!";
 
     @BeforeEach
     public void setup() {
@@ -37,7 +38,6 @@ public class JiraSoftwareCreateIssueTest {
 
     @Test
     public void createMTPIssue() {
-        String summary = "Hello World!";
         String issueIDXpath = "//*[@id=\"aui-flag-container\"]/div/div/a";
 
         JiraSoftware MTPIssue = new CreateMTPIssue(driver, summary, wait);
@@ -60,7 +60,7 @@ public class JiraSoftwareCreateIssueTest {
 
     @Test
     public void createIssueWithoutMandatoryField() {
-        JiraSoftware createIssue = new CreateIssue(driver, wait);
+        JiraSoftware createIssue = new CreateMTPIssue(driver, summary, wait);
         createIssue.run();
 
         String errorMessageXpath = "//*[@id=\"dialog-form\"]/div/div[2]/div[1]/div";

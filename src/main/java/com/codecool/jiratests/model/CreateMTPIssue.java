@@ -20,15 +20,15 @@ public class CreateMTPIssue extends JiraSoftware {
 
     @Override
     public void run() {
-
         WebElement createButton = driver.findElement(By.id("create_link"));
         createButton.click();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("create-issue-submit")));
+        String issueSubmitButton = "create-issue-submit";
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(issueSubmitButton)));
         WebElement summaryField = driver.findElement(By.id("summary"));
         summaryField.sendKeys(summary);
 
-        WebElement createIssueButton = driver.findElement(By.id("create-issue-submit"));
+        WebElement createIssueButton = driver.findElement(By.id(issueSubmitButton));
         createIssueButton.click();
     }
 }
