@@ -60,7 +60,7 @@ public class JiraSoftwareCreateIssueTest {
 
     @Test
     public void createIssueWithoutMandatoryField() {
-        JiraSoftware createIssue = new CreateMTPIssue(driver, summary, wait);
+        JiraSoftware createIssue = new CancelIssueCreate(driver, wait);
         createIssue.run();
 
         String errorMessageXpath = "//*[@id=\"dialog-form\"]/div/div[2]/div[1]/div";
