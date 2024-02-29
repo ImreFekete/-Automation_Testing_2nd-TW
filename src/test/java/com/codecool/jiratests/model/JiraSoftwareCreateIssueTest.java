@@ -19,7 +19,7 @@ public class JiraSoftwareCreateIssueTest {
     private static WebDriver driver = null;
     private static WebDriverWait wait = null;
     private static Dotenv dotenv = Dotenv.load();
-    private static final String profileMenuID = "header-details-user-fullname";
+    private static final String PROFILE_MENU_ID = "header-details-user-fullname";
 
     @BeforeEach
     public void setup() {
@@ -32,7 +32,7 @@ public class JiraSoftwareCreateIssueTest {
 
         JiraSoftware login = new LogIn(driver, username, password);
         login.run();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(profileMenuID)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(PROFILE_MENU_ID)));
     }
 
     @Test
