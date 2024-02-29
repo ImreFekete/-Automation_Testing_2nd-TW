@@ -15,7 +15,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class JiraSoftwareCreateIssueTest {
-
     private static WebDriver driver = null;
     private static WebDriverWait wait = null;
     private static Dotenv dotenv = Dotenv.load();
@@ -41,7 +40,7 @@ public class JiraSoftwareCreateIssueTest {
         String summary = "Hello World!";
         String issueIDXpath = "//*[@id=\"aui-flag-container\"]/div/div/a";
 
-        JiraSoftware MTPIssue = new CreateMTPIssue(driver, summary);
+        JiraSoftware MTPIssue = new CreateMTPIssue(driver, summary, wait);
         MTPIssue.run();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(issueIDXpath)));
@@ -60,8 +59,8 @@ public class JiraSoftwareCreateIssueTest {
     }
 
     @Test
-    public void cancelIssueEditing() {
-        CreateIssue createIssue = new CreateIssue(driver, wait);
+    public void createIssueWithoutMandatoryField() {
+        JiraSoftware createIssue = new CreateIssue(driver, wait);
         createIssue.run();
 
         String errorMessageXpath = "//*[@id=\"dialog-form\"]/div/div[2]/div[1]/div";

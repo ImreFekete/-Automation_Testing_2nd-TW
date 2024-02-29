@@ -9,17 +9,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class CreateMTPIssue extends JiraSoftware {
-
     private String summary;
+    private WebDriverWait wait;
 
-    public CreateMTPIssue(WebDriver driver, String summary) {
+    public CreateMTPIssue(WebDriver driver, String summary, WebDriverWait wait) {
         super(driver);
         this.summary = summary;
+        this.wait = wait;
     }
 
     @Override
     public void run() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         WebElement createButton = driver.findElement(By.id("create_link"));
         createButton.click();
