@@ -1,10 +1,7 @@
 package com.codecool.jiratests.model;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,6 +19,7 @@ public class JiraSoftwareBrowseIssueByAssigneeNameTest {
     private static String fullname;
     private WebDriver driver;
     private WebDriverWait wait;
+
     @BeforeAll
     public static void initializeData() {
         username = dotenv.get("JIRA_USERNAME");
@@ -51,5 +49,10 @@ public class JiraSoftwareBrowseIssueByAssigneeNameTest {
         String assigneeName = firstIssueAssigneeField.getAttribute("rel");
 
         Assertions.assertEquals(assigneeName, username);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        driver.quit();
     }
 }

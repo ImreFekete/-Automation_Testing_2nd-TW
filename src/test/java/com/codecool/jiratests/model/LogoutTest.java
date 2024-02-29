@@ -1,10 +1,7 @@
 package com.codecool.jiratests.model;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,5 +42,9 @@ public class LogoutTest {
         logOut.run();
         WebElement logOutPanel = driver.findElement(By.id("main"));
         Assertions.assertTrue(logOutPanel.isDisplayed());
+    }
+    @AfterEach
+    public void tearDown() {
+        driver.quit();
     }
 }
