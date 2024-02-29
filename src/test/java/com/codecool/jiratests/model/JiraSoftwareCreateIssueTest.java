@@ -24,7 +24,8 @@ public class JiraSoftwareCreateIssueTest {
     @BeforeEach
     public void setup() {
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        int timeout = 10;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         driver.manage().window().maximize();
 
         String username = dotenv.get("JIRA_USERNAME");
@@ -37,7 +38,6 @@ public class JiraSoftwareCreateIssueTest {
 
     @Test
     public void createMTPIssue() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         String summary = "Hello World!";
         String issueIDXpath = "//*[@id=\"aui-flag-container\"]/div/div/a";
 
