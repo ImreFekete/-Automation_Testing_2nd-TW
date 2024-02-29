@@ -15,21 +15,23 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class JiraSoftwareUnsuccessfulLoginTest {
-    public static WebDriver driver = null;
+    private static WebDriver driver = null;
+    private static WebDriverWait wait = null;
+    private static final Dotenv dotenv = Dotenv.load();
 
     @BeforeEach
     public void setup() {
+        int timeOut = 10;
         driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
         driver.manage().window().maximize();
     }
 
     @Test
     public void loginWithWrongPassword() {
-        Dotenv dotenv = Dotenv.load();
         String username = dotenv.get("JIRA_USERNAME");
         String wrongPassword = "wrongpasswordfortest";
         String errorId = "usernameerror";
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         JiraSoftware login = new LogIn(driver, username, wrongPassword);
 
         login.run();
@@ -42,13 +44,10 @@ public class JiraSoftwareUnsuccessfulLoginTest {
 
     @Test
     public void captchaAfterThirdTry() {
-        Dotenv dotenv = Dotenv.load();
         String username = dotenv.get("JIRA_USERNAME");
         String wrongPassword = "wrongpasswordfortest";
         String captchaId = "captcha";
         int tries = 3;
-        int timeout = 10;
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         JiraSoftware login = new LogIn(driver, username, wrongPassword);
 
         for (int i = 0; i < tries; i++) {
